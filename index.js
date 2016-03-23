@@ -43,6 +43,7 @@ app.get('/cats/new', function (req, res) {
   // RELEASE 2
   // Use `cats.getCatPhotoLinks` to get six cat image links
   // then pass them to the `cats/new` template and render it
+  cats.getCatPhotoLinks(cats.extractLinks)
   res.render('cats/new')
 })
 

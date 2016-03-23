@@ -1,6 +1,7 @@
 var fs      = require('fs')
 var path    = require('path')
 var request = require('request')
+require('dotenv').config();
 
 var cats = {
   cats: [
@@ -18,21 +19,25 @@ var CAT_DB = path.join(__dirname, 'db/cats.json')
 // object above to a JSON string and writes it to the
 // `db/cats.json` file.
 var saveTheCats = function (filename, cats) {
-  return false
+  fs.writeFileSync(filename, JSON.stringify(cats))
+    console.log('For glory and honor')
 }
+
 
 // Complete this function so that it reads the `db/cats.json`
 // file and returns its contents *as JSON*
 var findTheCats = function (filename) {
-  return false
+  var data = fs.readFileSync(filename)
+  return JSON.parse(data)
 }
+
 
 // ---------- RELEASE 2 ---------- //
 
 // See https://www.flickr.com/services/api/flickr.photos.search.html
 var query = [
   'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=',
-  process.env.FLICKR_APP_KEY,
+  process.env.FLICKR_API_KEY,
   '&tags=cat&per_page=6&format=json&nojsoncallback=1'
 ].join('')
 
@@ -41,13 +46,31 @@ var query = [
 var getCatPhotoLinks = function (callback) {
   request.get(query, function(err, response, body) {
     // Handle the error and return the body in the callback
+    if (err){
+      callback(err)
+      return
+    }
+    callback(null, body)
   })
 }
 
+function extractLinks(err, data){
+  if (err){
+     console.log('Error alert')
+    return
+  }
+  var photos = JSON.parse(data).photos.photo, links = []
+  links = photos.map(function(photo){
+  return 'https://farm' + photos.farm + '.staticflickr.com/' + photos.server + '/' + photos.id + '_' + photos.secret + '.jpg'
+  })
+}
+getCatPhotoLinks()
 exports = module.exports = {
   cats: cats,
   dbPath: CAT_DB,
   saveTheCats: saveTheCats,
   findTheCats: findTheCats,
-  getCatPhotoLinks: getCatPhotoLinks
+  getCatPhotoLinks: getCatPhotoLinks,
+  extractLinks: extractLinks
 }
+
