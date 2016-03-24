@@ -52,7 +52,17 @@ app.get('/cats/new', function (req, res) {
 // Show detail for cat with id === :id
 // Try going to /cats/1
 app.get('/cats/:id', function (req, res) {
-  res.end(JSON.stringify(req.params))
+  var catsArr=cats.findTheCats('./db/cats.json');
+  var _cat=catsArr.cats.filter(function(cat){
+    return cat.id==req.params.id;
+  })
+  if(!_cat[0].visited){
+    _cat[0].visited=0;
+  }
+  _cat[0].visited++;
+  cats.saveTheCats('./db/cats.json',catsArr);
+ res.render('cats/show',{cats:_cat});
+  
 })
 
 // Display the edit form for cat with id === :id

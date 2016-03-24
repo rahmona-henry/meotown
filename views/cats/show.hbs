@@ -1,0 +1,18 @@
+
+<div class="row">
+	 {{#each cats}}
+<div class="col-md-6 col-md-offset-3 catContainer">
+
+	  <h2>{{this.name}}</h2>
+	  <a href="cats/{{this.id}}"><img src={{this.image}} class="img-thumbnail image img-responsive"></a>
+	  <p>{{this.life_story}}</p>
+
+<div class="btn-group" role="group" aria-label="...">
+
+	  <a href='/' class="btn btn-primary btn-lg">All the Cats</a>
+
+</div>
+</div>
+
+	 {{/each}}
+</div>

@@ -1,23 +1,22 @@
-<h1>Meowtown</h1>
-<nav>
-  <a class="link" href="/cats/new">generate cat</a> /
-  <a class="link" href="/cats/help">wuuut?</a>
-</nav>
- {{#each cats}}
-<ul>
-  <li>{{this.name}}</li>
-  <li><img src={{this.image}} class='image'></li>
-  <li>{{this.life_story}}</li>
 
+<div class="row">
+	 {{#each cats}}
+<div class="col-md-6 col-md-offset-3 catContainer">
 
-<form method="POST" action="/cats/{{this.id}}?_method=DELETE">
-  <button type="submit">Delete </button>
-</form>
+	  <h2>{{this.name}}   <small class="label label-primary">{{this.visited}}</small></h2>
+	  <a href="cats/{{this.id}}"><img src={{this.image}} class="img-thumbnail image img-responsive"></a>
+	  <p>{{this.life_story}}</p>
 
-<form method="POST" action="/cats/{{this.id}}?_method=PATCH">
-  <button type="submit">Update </button>
-</form>
+<div class="btn-group" role="group" aria-label="...">
+	<form method="POST" action="/cats/{{this.id}}?_method=DELETE" >
+	  <button type="submit" class="btn btn-danger">Delete </button>
+	</form>
 
+	<form method="POST" action="/cats/{{this.id}}?_method=PATCH" >
+	  <button type="submit" class="btn btn-success">Update </button>
+	</form>
+</div>
+</div>
 
-</ul>
- {{/each}}
+	 {{/each}}
+</div>

@@ -1,30 +1,33 @@
+<div class="row">
+<div class="col-md-8 col-md-offset-2 catContainer">
 <h1>Cat Generator</h1>
 
 <form class="new_cat" id="new_cat" action="/cats"
   accept-charset="UTF-8" method="POST">
 
-  <p>
-    <input placeholder="name" type="text" name="name" id="cat_name">
-  </p>
-
-  <p>
-    <!-- Replace this input with a some kind of GUI that allows the user
-         to select one of six cat images, then pass the URL of that image
-         back to the back end and save the new cat info into the JSON file -->
+  <div class="form-group">
+    <input placeholder="name" type="text" name="name" id="cat_name" class="form-control">
+  </div>
+<div class='row'>
 {{#each images}}
-    <input placeholder="image url" type="radio" name="image" value={{this}} id="cat_image"><img src={{this}} class='img'>
+<div class="col-md-4 form-group catContainer">
+    <input placeholder="image url" type="radio" name="image" value={{this}} id="cat_image" class="form-control">
+    <img src={{this}} class='img img-responsive'>
+</div>
 {{/each }}
-  </p>
+</div>
 
-  <p>
+  <div class="form-group">
     <textarea placeholder="life story" name="life_story"
-      id="cat_life_story"></textarea>
-  </p>
+      id="cat_life_story" class="form-control"></textarea>
+  </div>
 
-  <p>
-    <input type="submit" name="commit" value="Create Cat" />
-  </p>
+  <div class="btn-group" role="group" aria-label="...">
+    <input type="submit" name="commit" value="Create Cat" class="btn btn-default"/>
+    <a class="link btn btn-primary" href="/cats" >Never mind</a>
+  </div>
 
 </form>
 
-<p><a class="link" href="/cats">Never mind</a></p>
+</div>
+</div>

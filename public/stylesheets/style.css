@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -8,11 +8,22 @@ a {
 }
 
 .img{
-  max-width: 160px;
-  height: 100px;
+  max-width: 100%;
+  height: 150px;
 
 }
 ul{
   display: block;
   margin: 0px auto;
+}
+.catContainer{
+	text-align: center;
+}
+
+.btn-group form{
+	display: inline-block;
+}
+.editPic{
+	display: block;
+	margin: 5px auto;
 }
