@@ -48,8 +48,8 @@ test('GET /cats/new', function (t) {
       // res.text should be the output of your template
       // write a test here to ensure that there are six images representing
       // the six cats in your output. You'll probably want a Regex.
+      t.equal(res.text.toString().match(/<img/g).length,6,'there are six images representing');
 
-      // console.log(res.text)
       t.end()
     })
 })

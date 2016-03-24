@@ -1,0 +1,30 @@
+<h1>Cat Generator</h1>
+{{#each cats}}
+<form class="new_cat" id="new_cat" action="/cats/{{this.id}}"
+  accept-charset="UTF-8" method="POST">
+
+  <p>
+    <input placeholder="name" type="text" name="name" id="cat_name" value={{this.name}}>
+  </p>
+
+  <p>
+    <!-- Replace this input with a some kind of GUI that allows the user
+         to select one of six cat images, then pass the URL of that image
+         back to the back end and save the new cat info into the JSON file -->
+
+    <input placeholder="image url" type="radio" name="image" value={{this.image}} id="cat_image" display='none'><img src={{this.image}} class='img'>
+
+  </p>
+
+  <p>
+    <textarea placeholder="life story" name="life_story"
+      id="cat_life_story" >{{this.life_story}}</textarea>
+  </p>
+
+  <p>
+    <input type="submit" name="commit" value="Save Cat" />
+  </p>
+
+</form>
+{{/each}}
+<p><a class="link" href="/cats">Never mind</a></p>

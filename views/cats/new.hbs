@@ -11,7 +11,9 @@
     <!-- Replace this input with a some kind of GUI that allows the user
          to select one of six cat images, then pass the URL of that image
          back to the back end and save the new cat info into the JSON file -->
-    <input placeholder="image url" type="text" name="image" id="cat_image">
+{{#each images}}
+    <input placeholder="image url" type="radio" name="image" value={{this}} id="cat_image"><img src={{this}} class='img'>
+{{/each }}
   </p>
 
   <p>

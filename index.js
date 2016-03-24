@@ -35,7 +35,8 @@ app.get('/', function (req, res) {
 
 // List all cats
 app.get('/cats', function (req, res) {
-  res.render('cats/index', cats)
+  var catsArr=cats.findTheCats('./db/cats.json');
+  res.render('cats/index', catsArr)
 })
 
 // Display the new cat form
@@ -43,8 +44,9 @@ app.get('/cats/new', function (req, res) {
   // RELEASE 2
   // Use `cats.getCatPhotoLinks` to get six cat image links
   // then pass them to the `cats/new` template and render it
-  cats.getCatPhotoLinks(cats.extractLinks)
-  res.render('cats/new')
+  cats.getCatPhotoLinks(function(err,data){
+    res.render('cats/new',{images: data})
+  })
 })
 
 // Show detail for cat with id === :id
@@ -64,7 +66,22 @@ app.get('/cats/:id/edit', function (req, res) {
 // a key-value pair: _method=PATCH
 // See the home page for an example
 app.patch('/cats/:id', function (req, res) {
-  res.end('You found the patch!')
+  var catsArr=cats.findTheCats('./db/cats.json');
+  catsArr.cats=catsArr.cats.filter(function(cat){
+    return cat.id==req.params.id;
+  })
+ res.render('cats/edit',catsArr);
+})
+
+app.post('/cats/:id', function (req, res) {
+  var catsArr=cats.findTheCats('./db/cats.json');
+  var theOnewewant=catsArr.cats.filter(function(cat){
+    return cat.id == req.params.id;
+  })
+  theOnewewant[0].name=req.body.name;
+  theOnewewant[0].life_story=req.body.life_story
+  cats.saveTheCats('./db/cats.json',catsArr);
+ res.redirect('/cats')
 })
 
 // Delete the cat with id === :id
@@ -72,12 +89,27 @@ app.patch('/cats/:id', function (req, res) {
 // a key-value pair: _method=DELETE
 // See the home page for an example
 app.delete('/cats/:id', function (req, res) {
-  res.end('You found the delete!')
+  var catsArr=cats.findTheCats('./db/cats.json');
+  catsArr.cats=catsArr.cats.filter(function(cat){
+    return cat.id!=req.params.id;
+  })
+  cats.saveTheCats('./db/cats.json',catsArr);
+
+  res.redirect('/cats')
 })
 
 // Handle the posted form data
+
+
 app.post('/cats', function (req, res) {
-  res.end(JSON.stringify(req.body))
+  var catsArr=cats.findTheCats('./db/cats.json');
+  var newCat=req.body;
+  newCat.id= Date.now();
+  catsArr.cats.push(newCat)
+  cats.saveTheCats('./db/cats.json',catsArr);
+  //res.end(JSON.stringify(req.body))
+  res.render('cats/index',catsArr);
+
 })
 
 // Start the app only when run with npm start

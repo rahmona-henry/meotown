@@ -3,17 +3,21 @@
   <a class="link" href="/cats/new">generate cat</a> /
   <a class="link" href="/cats/help">wuuut?</a>
 </nav>
-
-<ul>
  {{#each cats}}
+<ul>
   <li>{{this.name}}</li>
- {{/each}}
+  <li><img src={{this.image}} class='image'></li>
+  <li>{{this.life_story}}</li>
+
+
+<form method="POST" action="/cats/{{this.id}}?_method=DELETE">
+  <button type="submit">Delete </button>
+</form>
+
+<form method="POST" action="/cats/{{this.id}}?_method=PATCH">
+  <button type="submit">Update </button>
+</form>
+
+
 </ul>
-
-<form method="POST" action="/cats/1?_method=DELETE">
-  <button type="submit">Delete 1</button>
-</form>
-
-<form method="POST" action="/cats/1?_method=PATCH">
-  <button type="submit">Update 1</button>
-</form>
+ {{/each}}

@@ -50,27 +50,20 @@ var getCatPhotoLinks = function (callback) {
       callback(err)
       return
     }
-    callback(null, body)
+    var photos = JSON.parse(body).photos.photo, links = []
+    links = photos.map(function(photo){
+    return 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'
+    })
+    callback(null, links)
   })
 }
 
-function extractLinks(err, data){
-  if (err){
-     console.log('Error alert')
-    return
-  }
-  var photos = JSON.parse(data).photos.photo, links = []
-  links = photos.map(function(photo){
-  return 'https://farm' + photos.farm + '.staticflickr.com/' + photos.server + '/' + photos.id + '_' + photos.secret + '.jpg'
-  })
-}
-getCatPhotoLinks()
+
 exports = module.exports = {
   cats: cats,
   dbPath: CAT_DB,
   saveTheCats: saveTheCats,
   findTheCats: findTheCats,
   getCatPhotoLinks: getCatPhotoLinks,
-  extractLinks: extractLinks
 }
 
