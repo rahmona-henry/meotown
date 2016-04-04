@@ -36,7 +36,9 @@ app.get('/', function (req, res) {
 // List all cats
 app.get('/cats', function (req, res) {
   var catsArr=cats.findTheCats('./db/cats.json');
-  res.render('cats/index', catsArr)
+  res.header( 'Access-Control-Allow-Origin','*' );
+  //res.render('cats/index', catsArr)
+  res.json(catsArr);
 })
 
 // Display the new cat form
@@ -56,13 +58,14 @@ app.get('/cats/:id', function (req, res) {
   var _cat=catsArr.cats.filter(function(cat){
     return cat.id==req.params.id;
   })
-  if(!_cat[0].visited){
+  res.header( 'Access-Control-Allow-Origin','*' );
+/*  if(!_cat[0].visited){
     _cat[0].visited=0;
-  }
-  _cat[0].visited++;
-  cats.saveTheCats('./db/cats.json',catsArr);
- res.render('cats/show',{cats:_cat});
-  
+  }*/
+/*  _cat[0].visited++;*/
+/*  cats.saveTheCats('./db/cats.json',catsArr);*/
+ //res.render('cats/show',{cats:_cat});
+  res.json({cats:_cat});
 })
 
 // Display the edit form for cat with id === :id
@@ -92,6 +95,7 @@ app.post('/cats/:id', function (req, res) {
   theOnewewant[0].life_story=req.body.life_story
   cats.saveTheCats('./db/cats.json',catsArr);
  res.redirect('/cats')
+ //res.json({cats:catsArr});
 })
 
 // Delete the cat with id === :id
@@ -104,8 +108,9 @@ app.delete('/cats/:id', function (req, res) {
     return cat.id!=req.params.id;
   })
   cats.saveTheCats('./db/cats.json',catsArr);
-
-  res.redirect('/cats')
+  res.header( 'Access-Control-Allow-Origin','*' );
+  //res.redirect('/cats')
+  res.json({cats:catsArr});
 })
 
 // Handle the posted form data
@@ -118,8 +123,9 @@ app.post('/cats', function (req, res) {
   catsArr.cats.push(newCat)
   cats.saveTheCats('./db/cats.json',catsArr);
   //res.end(JSON.stringify(req.body))
-  res.render('cats/index',catsArr);
-
+  //res.render('cats/index',catsArr);
+  res.header( 'Access-Control-Allow-Origin','*' );
+  res.json({cats:[newCat]});
 })
 
 // Start the app only when run with npm start
